@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 @onready var Collider: CollisionShape2D = $Collider
 @onready var Sprite: Sprite2D = $Sprite
@@ -31,19 +31,17 @@ func _physics_process(delta: float) -> void:
 	HandleSpriteFlipH()
 
 	# Handle jump. Анимация не будет работать, её перекроет анимация бега
-	if Input.is_action_just_pressed("KeyJump") and is_on_floor():
+	if keyJumpJustPressed and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		Animator.play('Jump')
 
-	if not is_on_floor():
-
+	if not is_on_floor() and velocity.y >= 0:
 		Animator.play('Fall')
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("KeyLeft", "KeyRight")
-	if is_on_floor():
-		if direction:
+	if !keyJumpJustPressed and is_on_floor():
+		if moveDirectionX:
 			Animator.play('Run')
 		else:
 			Animator.play('Idle')
