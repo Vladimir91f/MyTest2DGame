@@ -3,6 +3,13 @@ class_name Player extends CharacterBody2D
 @onready var Collider: CollisionShape2D = $Collider
 @onready var Sprite: Sprite2D = $Sprite
 @onready var Animator: AnimationPlayer = $Animator
+@onready var PlayerSM: Node = $StateMachine
+
+# States
+const IDLE = "Idle"
+const RUN = "Run"
+const JUMP = "Jump"
+const FALL = "Fall"
 
 # Movement
 const RUN_SPEED = 150.0
@@ -10,8 +17,7 @@ const GROUND_ACCELERATION = 40 # ускорение на земле
 const GROUND_DECELERATION = 50 # замедление на земле
 var moveDirectionX = 0
 
-# Jump
-const JUMP_VELOCITY = -300.0
+# Gravity
 const GRAVITY_POWER = 700
 
 var facing = 0 # куда повернут игрок ((-1) - лево, 1 - право)
@@ -29,22 +35,7 @@ func _physics_process(delta: float) -> void:
 	HandleKeyInput()
 	HandleHorizontalMovement()
 	HandleSpriteFlipH()
-
-	# Handle jump. Анимация не будет работать, её перекроет анимация бега
-	if keyJumpJustPressed and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		Animator.play('Jump')
-
-	if not is_on_floor() and velocity.y >= 0:
-		Animator.play('Fall')
-		
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	if !keyJumpJustPressed and is_on_floor():
-		if moveDirectionX:
-			Animator.play('Run')
-		else:
-			Animator.play('Idle')
+	HandleChangeState()
 
 	move_and_slide()
 	
@@ -69,6 +60,19 @@ func HandleHorizontalMovement(acceleration: float = GROUND_ACCELERATION, deceler
 		velocity.x = move_toward(velocity.x, moveDirectionX * RUN_SPEED, acceleration)
 	else: # Для плавной остановки игрока
 		velocity.x = move_toward(velocity.x, moveDirectionX * RUN_SPEED, deceleration)
-		
+
+func HandleChangeState():
+	if keyJumpJustPressed and is_on_floor():
+		PlayerSM.ChangeState(JUMP)
+
+	if not is_on_floor() and velocity.y >= 0:
+		PlayerSM.ChangeState(FALL)
+
+	if !keyJumpJustPressed and is_on_floor():
+		if moveDirectionX:
+			PlayerSM.ChangeState(RUN)
+		else:
+			PlayerSM.ChangeState(IDLE)
+
 func HandleSpriteFlipH():
 	Sprite.flip_h = facing < 1

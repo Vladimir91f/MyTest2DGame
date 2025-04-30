@@ -1,7 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://ovphx270r7d5"]
+[gd_scene load_steps=15 format=3 uid="uid://ovphx270r7d5"]
 
 [ext_resource type="Texture2D" uid="uid://hm8p4go5br66" path="res://Resources/Character base.png" id="1_e5kic"]
 [ext_resource type="Script" uid="uid://d0pfwqvn8ji8q" path="res://Entities/Player/Player.gd" id="1_ww0jn"]
+[ext_resource type="Script" uid="uid://bch1hhrpljslk" path="res://Entities/Player/PlayerStateMachine.gd" id="3_1des2"]
+[ext_resource type="Script" uid="uid://dn7a2uandv4ny" path="res://Entities/Player/States/Idle.gd" id="4_an6q6"]
+[ext_resource type="Script" uid="uid://balu0dhrd7mfs" path="res://Entities/Player/States/Run.gd" id="5_an6q6"]
+[ext_resource type="Script" uid="uid://d234q5hjisehc" path="res://Entities/Player/States/Jump.gd" id="6_hj1c0"]
+[ext_resource type="Script" uid="uid://bwtw6131gmpln" path="res://Entities/Player/States/Fall.gd" id="7_x44r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ww0jn"]
 size = Vector2(10, 23)
@@ -121,3 +126,19 @@ libraries = {
 &"": SubResource("AnimationLibrary_1des2")
 }
 autoplay = "Idle"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("3_1des2")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_an6q6")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_an6q6")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_hj1c0")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("7_x44r4")
