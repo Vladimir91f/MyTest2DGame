@@ -12,13 +12,16 @@ const JUMP = "Jump"
 const FALL = "Fall"
 
 # Movement
-const RUN_SPEED = 150.0
+const RUN_SPEED = 120.0
 const GROUND_ACCELERATION = 40 # ускорение на земле
 const GROUND_DECELERATION = 50 # замедление на земле
 var moveDirectionX = 0
 
 # Gravity
-const GRAVITY_POWER = 700
+const GRAVITY_JUMP = 600
+
+# Jump
+const JUMP_MULTIPLIER = 0.5
 
 var facing = 0 # куда повернут игрок ((-1) - лево, 1 - право)
 
@@ -50,9 +53,9 @@ func HandleKeyInput():
 	if(keyLeftPressed): facing = -1
 	if(keyRightPressed): facing = 1
 	
-func HandleGravity(delta: float, gravityPower: float = GRAVITY_POWER):
+func HandleGravity(delta: float, gravity: float = GRAVITY_JUMP):
 	if not is_on_floor():
-		velocity.y += gravityPower * delta
+		velocity.y += gravity * delta
 		
 func HandleHorizontalMovement(acceleration: float = GROUND_ACCELERATION, deceleration: float = GROUND_DECELERATION):
 	moveDirectionX = Input.get_axis("KeyLeft", "KeyRight")
