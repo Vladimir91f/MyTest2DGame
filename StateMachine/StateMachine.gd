@@ -27,7 +27,7 @@ func ChangeState(newStateName):
 		
 	var previousState = _currentState
 	previousState.Exit()
-
+	
 	var newState = get_node(newStateName)
 	_currentState = newState
 	_currentState.Enter()
