@@ -70,9 +70,13 @@ func HandleHorizontalMovement(acceleration: float = GROUND_ACCELERATION, deceler
 
 func HandleWallCollisions():
 	if(RCWallKickRight.is_colliding()):
-		wallDirectionX = Vector2.RIGHT
+		var collider = RCWallKickRight.get_collider()
+		if(collider is TileMapLayer and collider.name == 'Ground'):
+			wallDirectionX = Vector2.RIGHT
 	elif(RCWallKickLeft.is_colliding()):
-		wallDirectionX = Vector2.LEFT
+		var collider = RCWallKickLeft.get_collider()
+		if(collider is TileMapLayer and collider.name == 'Ground'):
+			wallDirectionX = Vector2.LEFT
 	else:
 		wallDirectionX = Vector2.ZERO
 
