@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://crdwyrlis0yiu" path="res://Entities/Player/States/WallJump.gd" id="8_x44r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ww0jn"]
-size = Vector2(10, 23)
+size = Vector2(8, 23)
 
 [sub_resource type="Animation" id="Animation_t38ms"]
 resource_name = "Fall"
@@ -171,9 +171,9 @@ script = ExtResource("8_x44r4")
 [node name="WallJump" type="Node2D" parent="Raycasts"]
 
 [node name="WallKickLeft" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(-4.5, 14)
+position = Vector2(-3.5, 14)
 target_position = Vector2(-3, 0)
 
 [node name="WallKickRight" type="RayCast2D" parent="Raycasts/WallJump"]
-position = Vector2(4.5, 14)
+position = Vector2(3.5, 14)
 target_position = Vector2(3, 0)

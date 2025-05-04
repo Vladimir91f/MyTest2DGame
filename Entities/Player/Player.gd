@@ -23,9 +23,6 @@ var moveDirectionX = 0
 # Gravity
 const GRAVITY_JUMP = 600
 
-# Jump
-const JUMP_MULTIPLIER = 0.5
-
 # WallJump
 var wallDirectionX = 0
 
@@ -45,7 +42,6 @@ func _physics_process(delta: float) -> void:
 	HandleKeyInput()
 	HandleHorizontalMovement()
 	HandleSpriteFlipH()
-	HandleChangeState()
 
 	move_and_slide()
 	
@@ -78,24 +74,6 @@ func HandleWallCollisions():
 		wallDirectionX = Vector2.LEFT
 	else:
 		wallDirectionX = Vector2.ZERO
-
-func HandleChangeState():
-
-	if ((wallDirectionX == Vector2.LEFT and keyJumpJustPressed and keyRightPressed)
-	or (wallDirectionX == Vector2.RIGHT and keyJumpJustPressed and keyLeftPressed)):
-		PlayerSM.ChangeState(WALL_JUMP)
-	
-	if keyJumpJustPressed and is_on_floor():
-		PlayerSM.ChangeState(JUMP)
-
-	if not is_on_floor() and velocity.y >= 0:
-		PlayerSM.ChangeState(FALL)
-
-	if !keyJumpJustPressed and is_on_floor():
-		if moveDirectionX:
-			PlayerSM.ChangeState(RUN)
-		else:
-			PlayerSM.ChangeState(IDLE)
 
 func HandleSpriteFlipH():
 	Sprite.flip_h = facing < 1
