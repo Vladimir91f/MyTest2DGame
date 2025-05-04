@@ -9,7 +9,10 @@ func Enter():
 func Update(_delta):
 	HandleMaxJumpVelocity()
 	# Добавляем обработку состояний
-	HandleStates([player.FALL, player.WALL_JUMP])
+	HandleStates([
+		player.FALL,
+		player.WALL_JUMP
+	])
 	# Анимируем
 	player.Animator.play(player.JUMP)
 	

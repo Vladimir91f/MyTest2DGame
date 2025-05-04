@@ -7,11 +7,13 @@ func Enter():
 	
 func Update(_delta):
 	# Добавляем обработку состояний
-	HandleStates([player.FALL])
+	HandleStates([
+		player.FALL
+	])
 	# Анимируем
 	player.Animator.play(player.WALL_JUMP)
 
 func Handle():
-	if ((player.wallDirectionX == Vector2.LEFT and player.keyJumpPressed and player.keyRightPressed)
-	or (player.wallDirectionX == Vector2.RIGHT and player.keyJumpPressed and player.keyLeftPressed)):
+	if ((player.wallDirectionX == Vector2.LEFT and player.keyJumpJustPressed and player.keyRightPressed)
+	or (player.wallDirectionX == Vector2.RIGHT and player.keyJumpJustPressed and player.keyLeftPressed)):
 		player.PlayerSM.ChangeState(player.WALL_JUMP)

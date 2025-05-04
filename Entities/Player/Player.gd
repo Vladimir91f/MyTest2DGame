@@ -13,6 +13,7 @@ const RUN = "Run"
 const JUMP = "Jump"
 const FALL = "Fall"
 const WALL_JUMP = "WallJump"
+const WALL_SLIDE = "WallSlide"
 
 # Movement
 const RUN_SPEED = 120.0

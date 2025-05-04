@@ -5,7 +5,10 @@ func Enter():
 	
 func Update(_delta):
 	# Добавляем обработку состояний
-	HandleStates([player.RUN, player.JUMP])
+	HandleStates([
+		player.RUN,
+		player.JUMP
+	])
 	# Анимируем
 	player.Animator.play(player.IDLE)
 	

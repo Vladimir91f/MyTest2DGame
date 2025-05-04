@@ -16,7 +16,13 @@ func Update(delta):
 	# Ограничиваем максимальную скорость падения
 	HandleMaxFallVelocity()
 	# Добавляем обработку состояний
-	HandleStates([player.IDLE, player.RUN, player.JUMP, player.WALL_JUMP])
+	HandleStates([
+		player.IDLE,
+		player.RUN,
+		player.JUMP,
+		player.WALL_JUMP,
+		player.WALL_SLIDE
+	])
 	# Анимируем
 	player.Animator.play(player.FALL)
 
